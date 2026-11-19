@@ -8,9 +8,11 @@
 </head>
 <body>
 <header class="hero">
-  <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5</p>
-  <h1>Leonida Trophy Guide</h1>
-  <p class="sub">Every one of the 55 trophies, with its official name, description and grade, a cited guide of its own, and a tracker that remembers your progress.</p>
+  <div class="hero-text">
+    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5</p>
+    <h1>Leonida Trophy Guide</h1>
+    <p class="sub">Every one of the 55 trophies, with its official name, description and grade, a cited guide of its own, and a tracker that remembers your progress.</p>
+  </div>
   <div class="progress-wrap" aria-label="Platinum progress">
     <div class="progress-line"><span id="progressText">0 of 55 earned</span><span id="progressPct">0%</span></div>
     <div class="progress-bar"><div id="progressFill"></div></div>
@@ -31,9 +33,7 @@
   <div id="nextUpBox" class="nextup" aria-live="polite"></div>
 
   <div class="missable-banner" role="alert">
-    <strong>1 missable + 1 time-sensitive:</strong> Positive Mental Attitude — Lucia&rsquo;s balcony
-    meditation in Chapter 1 disappears after Chapter 1 ends. Do it before Chapter 1 ends, or the
-    platinum needs a second playthrough.
+    <strong>1 missable:</strong> Positive Mental Attitude — meditate on Lucia&rsquo;s balcony in Chapter 1, before Chapter 1 ends.
   </div>
 
   <p class="audit-strip" id="auditStrip"></p>
@@ -42,7 +42,7 @@
 
   <div class="controls">
     <label class="search">Search trophies
-      <input id="search" type="search" placeholder="Try “bank”, “drone”, “meditate”…">
+      <input id="search" type="search" placeholder="Search trophies…">
     </label>
     <label>Grade
       <select id="grade">
@@ -83,7 +83,7 @@
 
   <div class="checklist-cols">
     <div>
-      <p class="hint">Tick a trophy when you earn it — progress is saved in this browser. Click a row to open its field notes on the right.</p>
+      <p class="hint">Tick trophies as you earn them — progress saves in this browser. Click a row for its guide.</p>
       <div id="list" class="list" role="list"></div>
     </div>
     <aside id="detail" class="detail" aria-label="Trophy details" aria-live="polite"></aside>
