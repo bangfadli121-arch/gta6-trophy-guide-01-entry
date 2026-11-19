@@ -3,23 +3,103 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
+<title>Leonida Trophy Guide — GTA VI Platinum Tracker</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
+<header class="hero">
+  <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5</p>
+  <h1>Leonida Trophy Guide</h1>
+  <p class="sub">Every one of the 55 trophies, with its official name, description and grade, a cited guide of its own, and a tracker that remembers your progress.</p>
+  <div class="progress-wrap" aria-label="Platinum progress">
+    <div class="progress-line"><span id="progressText">0 of 55 earned</span><span id="progressPct">0%</span></div>
+    <div class="progress-bar"><div id="progressFill"></div></div>
+    <p class="grade-line" id="gradeLine"></p>
+  </div>
 </header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
+
+<nav class="tabs" aria-label="Guide sections">
+  <button type="button" class="tab active" data-tab="checklist">Checklist</button>
+  <button type="button" class="tab" data-tab="roadmap">Roadmap to Platinum</button>
+  <button type="button" class="tab" data-tab="missables">Missables</button>
+</nav>
+
+<main>
+<section id="tab-checklist" class="panel">
+  <div class="controls">
+    <label class="search">Search trophies
+      <input id="search" type="search" placeholder="Try “bank”, “drone”, “meditate”…">
+    </label>
+    <label>Category
+      <select id="category">
+        <option value="all">All categories</option>
+        <option value="story">Story</option>
+        <option value="missable">Missable</option>
+        <option value="collectibles">Collectibles</option>
+        <option value="activities">Activities</option>
+        <option value="completion">Completion</option>
+      </select>
+    </label>
+    <label>Grade
+      <select id="grade">
+        <option value="all">All grades</option>
+        <option value="platinum">Platinum</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+        <option value="bronze">Bronze</option>
+      </select>
+    </label>
+    <label class="check"><input id="spoilers" type="checkbox" checked> Hide story spoilers</label>
+    <label class="check"><input id="hideEarned" type="checkbox"> Hide earned</label>
+    <button id="exportBtn" type="button">Export progress</button>
+    <label class="importBtn">Import progress <input id="importFile" type="file" accept="application/json"></label>
+    <button id="resetBtn" type="button">Reset</button>
+  </div>
+  <p class="hint">Tick a trophy when you earn it — progress is saved in this browser. Click a card to open its guide and sources.</p>
+  <p id="countLine" class="count-line"></p>
+  <div id="list" class="list"></div>
+</section>
+
+<section id="tab-roadmap" class="panel hidden">
+  <h2>Roadmap to the Platinum</h2>
+  <dl class="facts">
+    <div><dt>Platinum time</dt><dd>About 200 hours</dd></div>
+    <div><dt>Difficulty</dt><dd>4 / 10</dd></div>
+    <div><dt>Online trophies</dt><dd>None — every trophy is earned offline</dd></div>
+    <div><dt>Difficulty trophies</dt><dd>None — no difficulty setting matters</dd></div>
+    <div><dt>Mission-medal trophies</dt><dd>None — no gold medals on story missions</dd></div>
+  </dl>
+  <div class="warning">
+    <h3>Read this before you play</h3>
+    <ul>
+      <li><strong>Cheats disable trophies and saving.</strong> Do not use cheats on your platinum save.</li>
+      <li><strong>There is no mission replay and no New Game Plus.</strong> A story mission can only be played when it first appears.</li>
+      <li><strong>Save manually at the start of every chapter and before the final mission.</strong> That manual save is your only way back if you miss something.</li>
+      <li><strong>One trophy can be missed:</strong> Positive Mental Attitude — the Lucia balcony meditation spot in Chapter 1 disappears when Chapter 1 ends. Do it in Chapter 1.</li>
+    </ul>
+  </div>
+  <ol class="stages">
+    <li><h3>Stage 1 — Story, Chapters 1–4</h3><p>Play the story in order: Gone Fishing, then Chapters 1 to 4 and the final mission. Do the Chapter 1 balcony meditation as soon as you can. Tick each story trophy as it pops.</p></li>
+    <li><h3>Stage 2 — Stranger mission strands</h3><p>Clear all 8 stranger strands — Andy, Kenton, Billy, Randy, Tyrone and the rest — to their final missions. Each strand ends in its own trophy, and all 8 together earn Strangers &amp; Freaks.</p></li>
+    <li><h3>Stage 3 — Collectibles</h3><p>Finish the 3 card sets, WAiNK at 100 locations, discover 100 vehicles, explore all 52 areas, buy all 8 garages and register 10 vehicles on the Scooter Bros app.</p></li>
+    <li><h3>Stage 4 — Activities</h3><p>Gold all 42 Shooting Range challenges, win the 14 drone races and 20 different races, complete 250 stunts, meditate at the remaining spots, and try all 9 activity types.</p></li>
+    <li><h3>Stage 5 — Crime and money</h3><p>Rob the shops, jewelry store, armored trucks, 5 bank vaults and one illegal operation per gang; launder $250,000 of marked bills and spend $100,000 across shops.</p></li>
+    <li><h3>Stage 6 — 100% and platinum</h3><p>Check the in-game completion percentage, mop up whatever is left, and earn A Long Road for 100% completion — then Vice Got a Price! follows.</p></li>
+  </ol>
+</section>
+
+<section id="tab-missables" class="panel hidden">
+  <h2>Missable trophies</h2>
+  <p>Only one trophy is missable from the official descriptions. Everything else can be earned in free roam after the story — but because there is no mission replay, keep a manual save at the start of each chapter anyway.</p>
+  <div id="missableList" class="list"></div>
+  <h3>Story trophies are not missable — but they are one-shot</h3>
+  <p>Chapter and mission trophies unlock in story order and cannot be missed by playing through. They also cannot be replayed, so if you ever worry you skipped something, reload the manual save from the start of that chapter.</p>
+</section>
+</main>
+
+<footer>
+  <p>Guide text is written for this entry in its own words; each trophy cites its sources by name. Trophy names, descriptions and grades are as PlayStation publishes them. No Rockstar artwork or logo is used. Works fully offline — progress lives in your browser only.</p>
+</footer>
 <script type="module" src="app.js"></script>
 </body>
 </html>
