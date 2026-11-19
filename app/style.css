@@ -130,10 +130,36 @@ button:hover, .importBtn:hover { filter: brightness(1.15); }
 .badge.secret { background: #101c2e; color: #8fb8e8; border-color: #2b4a6b; }
 .badge.target-chip { background: #122b26; color: var(--accent-2); border-color: #1f5c4d; }
 
+/* v3: live roadmap strip above the checklist. */
+.roadmap-strip {
+  background: #122b26; border: 1px solid #1f5c4d; border-radius: 0.6rem;
+  padding: 0.6rem 0.9rem; margin: 0 0 0.8rem; font-size: 0.92rem; color: #d9f5ec;
+}
+.roadmap-strip strong { color: var(--accent-2); }
+.scroll-hint { color: var(--ink-dim); font-size: 0.9rem; margin: 0 0 0.6rem; }
+
+/* v3: grouped checklist section headers. */
+.section-head {
+  margin: 1rem 0 0.1rem; font-size: 0.85rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent-2);
+}
+.section-head:first-child { margin-top: 0.2rem; }
+
+/* v3: right-hand rail on each row: stage + number in the list of 55. */
+.row-right { margin-left: auto; text-align: right; flex: none; padding-left: 0.6rem; }
+.row-stage { margin: 0; font-size: 0.83rem; color: var(--ink-dim); white-space: nowrap; }
+.row-num { margin: 0.15rem 0 0; font-size: 0.9rem; font-weight: 700; color: var(--ink); white-space: nowrap; }
+
 /* Detail panel (right column). */
 .detail {
   background: var(--panel); border: 1px solid var(--line); border-radius: 0.75rem;
   padding: 1rem 1.1rem; position: sticky; top: 1rem;
+  max-height: calc(100vh - 2rem); overflow-y: auto;
+}
+.detail::after {
+  content: ""; position: sticky; bottom: 0; display: block; height: 1.4rem;
+  margin-top: -1.4rem; background: linear-gradient(transparent, var(--panel));
+  pointer-events: none;
 }
 .detail-kicker { margin: 0 0 0.3rem; color: var(--accent-2); font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
 .detail h2 { margin: 0 0 0.5rem; font-size: 1.35rem; line-height: 1.2; }
@@ -158,9 +184,28 @@ button:hover, .importBtn:hover { filter: brightness(1.15); }
 .detail-sources { margin: 0.3rem 0 0; padding-left: 1.1rem; font-size: 0.88rem; color: var(--ink-dim); }
 .detail-sources li { margin-bottom: 0.3rem; }
 .detail-sources a { color: var(--accent-2); }
-.detail-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.detail-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.7rem 0 0.2rem; }
 .detail-actions button { font-size: 0.9rem; padding: 0.55rem 0.8rem; }
+.detail-actions button:disabled { opacity: 0.45; cursor: default; }
+.detail-actions button:disabled:hover { filter: none; }
 .earned-btn { background: var(--accent-2); color: #08231d; }
+
+/* v3: numbered source chips + Next up tab rows. */
+.source-chips { margin: 0.4rem 0 0.2rem; }
+.source-chip {
+  display: inline-block; font-size: 0.85rem; font-weight: 700; color: var(--accent-2);
+  background: #122b26; border: 1px solid #1f5c4d; border-radius: 0.45rem;
+  padding: 0.2rem 0.55rem; margin-right: 0.3rem;
+}
+#tab-nextup h3 { margin: 1rem 0 0.5rem; color: var(--accent-2); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.nextup.pick { margin-bottom: 0.5rem; }
+.suggest-row {
+  display: flex; gap: 0.8rem; align-items: center; justify-content: space-between;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 0.6rem;
+  padding: 0.6rem 0.75rem; margin-bottom: 0.5rem;
+}
+.suggest-row p { margin: 0.1rem 0 0; }
+.suggest-row button { flex: none; }
 
 /* Roadmap / missables / sources tabs. */
 .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.7rem; margin: 0 0 1rem; }
