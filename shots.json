@@ -1,1 +1,34 @@
-[{"file":"1-cover.jpg","path":"/?demo=cover","viewport":{"height":800,"width":1280}},{"file":"2-roadmap.jpg","path":"/?tab=roadmap","viewport":{"height":800,"width":1280}},{"file":"3-spoiler.jpg","path":"/?demo=spoiler","viewport":{"height":800,"width":1280}},{"file":"4-missable.jpg","path":"/?open=27&spoilers=off&scroll=650","viewport":{"height":800,"width":1280}}]
+[
+  {
+    "file": "1-cover.jpg",
+    "path": "/",
+    "viewport": {
+      "height": 800,
+      "width": 1280
+    }
+  },
+  {
+    "file": "2-roadmap.jpg",
+    "path": "/?tab=roadmap",
+    "viewport": {
+      "height": 800,
+      "width": 1280
+    }
+  },
+  {
+    "file": "3-spoiler.jpg",
+    "path": "/?demo=spoiler&scroll=1400",
+    "viewport": {
+      "height": 800,
+      "width": 1280
+    }
+  },
+  {
+    "file": "4-missable.jpg",
+    "path": "/?open=27&spoilers=off&scroll=650",
+    "viewport": {
+      "height": 800,
+      "width": 1280
+    }
+  }
+]
