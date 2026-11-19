@@ -1,9 +1,9 @@
-// Leonida Trophy Guide v3: checklist grouped by section with earned/total
-// headers, a demo progress state (12/55: the first story trophies), sort +
-// status controls, spoiler mode that really hides un-earned story trophy
-// names, a restructured detail panel (official description, own-words guide,
-// numbered source chips, prev/next), a Next up tab, and a live roadmap strip.
-// Data: app/data/trophies.json (55 trophies, stage/difficulty/time per trophy).
+// Leonida Trophy Guide v4: v3 kept whole, plus the three v3 fixes — a short
+// search placeholder with a wide input, category counts that add up (top
+// categories only as filter pills; Robbery/Money/Strangers live on as small
+// tags on the rows, never as pills), and a compact header so the checklist
+// rows are above the fold at 1280x800. Data: app/data/trophies.json
+// (55 trophies, explicit category + stage per trophy).
 // Progress and Next Up live in localStorage; export / import included.
 // URL parameters for screenshot views: ?tab=roadmap|missables|nextup|sources,
 // ?spoilers=off, ?filter=<pill>, ?search=<text>, ?open=<trophy index>,
@@ -18,34 +18,40 @@ const STAGES = {
   2: 'Activities & collectibles',
   3: 'Side & cleanup',
 };
-// Labels the roadmap strip uses for each stage (same stages, shorter names).
-const STRIP_STAGES = {
-  1: 'Story first',
-  2: '100% checklist',
-  3: 'Side quests & cleanup',
-};
 const GRADE_RANK = { platinum: 0, gold: 1, silver: 2, bronze: 3 };
+// Top-level categories, data-driven from each trophy's "category" field:
+// Story 17, Activities 30, Collectibles 6, Completion 1, Platinum 1 = 55.
+// Stages are a different partition of the same 55 (17/20/18), not categories.
+// Sub-categories below are parts of Activities (Robbery 6 + Money 5 +
+// Strangers 6 = 17 of the 30) and appear only as small tags on the rows,
+// never as filter pills beside the top categories.
 const ROBBERY = new Set(['Break the Bank', 'Retail Therapy', 'Sneakthief', 'Maximum Withdrawal', 'A Classic Blitz Play', 'Pest Control']);
 const MONEY = new Set(['Dime on the Dollar', 'Treat Yo Self', 'Little Boxes', 'Maximum Withdrawal', 'Earn Cash, Not Kudos']);
 const STRANGERS = new Set(['Road to Rehabilitation', 'This Was No Boat Accident', 'The Lone Rider', 'Supply & Demand', 'Spin On This!', 'Strangers & Freaks']);
-// Checklist sections, in order. The platinum is pulled out of Completion so
-// it heads the list instead of sitting inside Stage 3.
+const SUBCATS = [
+  { label: 'Robbery', set: ROBBERY },
+  { label: 'Money', set: MONEY },
+  { label: 'Strangers', set: STRANGERS },
+];
+function subcatLabels(t) { return SUBCATS.filter((s) => s.set.has(t.name)).map((s) => s.label); }
+// Checklist sections, in order. The platinum heads the list on its own.
 const GROUPS = [
-  { key: 'platinum', label: 'Platinum', match: (t) => t.grade === 'platinum' },
+  { key: 'platinum', label: 'Platinum', match: (t) => t.category === 'platinum' },
   { key: 'story', label: 'Story', match: (t) => t.category === 'story' },
   { key: 'activities', label: 'Activities', match: (t) => t.category === 'activities' },
   { key: 'collectibles', label: 'Collectibles', match: (t) => t.category === 'collectibles' },
-  { key: 'completion', label: 'Completion', match: (t) => t.category === 'completion' && t.grade !== 'platinum' },
+  { key: 'completion', label: 'Completion', match: (t) => t.category === 'completion' },
 ];
+const CATEGORY_LABEL = { platinum: 'Platinum', story: 'Story', activities: 'Activities', collectibles: 'Collectibles', completion: 'Completion' };
+// Filter pills: top categories only, plus the Missable flag. No sub-category
+// pill sits beside them, so no pill count can be read as a category total.
 const PILLS = [
   { key: 'all', label: 'All', match: () => true },
   { key: 'story', label: 'Story', match: (t) => t.category === 'story' },
-  { key: 'missable', label: 'Missable', match: (t) => t.missable },
-  { key: 'collectibles', label: 'Collectibles', match: (t) => t.category === 'collectibles' },
   { key: 'activities', label: 'Activities', match: (t) => t.category === 'activities' },
-  { key: 'robbery', label: 'Robbery', match: (t) => ROBBERY.has(t.name) },
-  { key: 'money', label: 'Money', match: (t) => MONEY.has(t.name) },
-  { key: 'strangers', label: 'Strangers', match: (t) => STRANGERS.has(t.name) },
+  { key: 'collectibles', label: 'Collectibles', match: (t) => t.category === 'collectibles' },
+  { key: 'completion', label: 'Completion', match: (t) => t.category === 'completion' },
+  { key: 'missable', label: 'Missable', match: (t) => t.missable },
   { key: 'nextup', label: 'Next up', match: (t) => t.name === nextUp },
 ];
 // Short unit labels for the target chips on rows and in the detail panel.
@@ -224,13 +230,22 @@ function trophyRow(t, index) {
     c.textContent = chip;
     badges.append(c);
   }
-  body.append(badges);
-
-  const src = document.createElement('p');
-  src.className = 'row-source';
+  for (const label of subcatLabels(t)) {
+    const c = document.createElement('span');
+    c.className = 'badge subcat';
+    c.textContent = label;
+    badges.append(c);
+  }
+  // The cited source rides on the same line as the badges, so the row stays
+  // short: no separate source line per row (full sources live in the panel).
   const gs = guideSource(t);
-  src.textContent = gs ? `Source: ${gs.name}` : '';
-  body.append(src);
+  if (gs) {
+    const s = document.createElement('span');
+    s.className = 'row-source-inline';
+    s.textContent = `Source: ${gs.name}`;
+    badges.append(s);
+  }
+  body.append(badges);
 
   row.append(body);
 
@@ -271,7 +286,8 @@ function renderDetail() {
   html += `<p class="detail-kicker">Stage ${t.stage} — ${STAGES[t.stage]} · #${index + 1} of 55</p>`;
   html += `<h2>${hidden ? esc(hiddenName(t)) : esc(t.name)}</h2>`;
   html += `<div class="badges"><span class="badge ${t.grade}">${t.grade}</span>`;
-  if (t.category === 'story') html += `<span class="badge">Story</span>`;
+  html += `<span class="badge">${CATEGORY_LABEL[t.category] || t.category}</span>`;
+  for (const label of subcatLabels(t)) html += `<span class="badge subcat">${label}</span>`;
   if (t.secret) html += `<span class="badge secret">Hidden on PSN</span>`;
   if (t.missable) html += `<span class="badge missable">Missable</span>`;
   html += `</div>`;
@@ -425,13 +441,14 @@ function render() {
     `${trophies.filter((t) => t.missable).length} missable · Exophase + PowerPyx + PSNProfiles, 19 Nov 2026`;
   for (const el of auditEls) if (el) el.textContent = audit;
 
-  // Live roadmap strip above the checklist: earned/total per stage.
+  // Live roadmap strip above the checklist: earned/total per stage, using
+  // the same stage names as everywhere else (stages partition the 55).
   const stageBits = [1, 2, 3].map((n) => {
     const inStage = trophies.filter((t) => t.stage === n);
     const got = inStage.filter((t) => earned.has(t.name)).length;
-    return `Stage ${n} ${STRIP_STAGES[n]} · ${got}/${inStage.length}`;
+    return `Stage ${n} ${STAGES[n]} · ${got}/${inStage.length}`;
   }).join(' | ');
-  roadmapStripEl.textContent = `Roadmap to the platinum: ${stageBits} | 1 missable — Positive Mental Attitude`;
+  roadmapStripEl.textContent = `ROADMAP — ${stageBits} | 1 missable — Positive Mental Attitude`;
 
   // Stage summary chips (click to filter by stage).
   stageChipsEl.innerHTML = '';
