@@ -22,6 +22,7 @@
   <button type="button" class="tab active" data-tab="checklist">Checklist</button>
   <button type="button" class="tab" data-tab="roadmap">Roadmap to Platinum</button>
   <button type="button" class="tab" data-tab="missables">Missables</button>
+  <button type="button" class="tab" data-tab="nextup">Next up</button>
   <button type="button" class="tab" data-tab="sources">Sources &amp; honesty</button>
 </nav>
 
@@ -52,6 +53,21 @@
         <option value="bronze">Bronze</option>
       </select>
     </label>
+    <label>Sort
+      <select id="sort">
+        <option value="roadmap">Roadmap order</option>
+        <option value="name">Name</option>
+        <option value="grade">Grade</option>
+      </select>
+    </label>
+    <label>Status
+      <select id="status">
+        <option value="all">All</option>
+        <option value="earned">Earned</option>
+        <option value="missing">Missing</option>
+      </select>
+    </label>
+    <label class="check"><input id="hiddenOnly" type="checkbox"> Hidden only</label>
     <label class="check"><input id="spoilers" type="checkbox" checked> Hide story spoilers</label>
     <label class="check"><input id="hideEarned" type="checkbox"> Hide earned</label>
     <button id="exportBtn" type="button">Export progress</button>
@@ -62,6 +78,8 @@
   <div class="pills" id="pills" role="group" aria-label="Filter trophies"></div>
 
   <p id="countLine" class="count-line"></p>
+
+  <p class="roadmap-strip" id="roadmapStrip" aria-label="Roadmap to the platinum"></p>
 
   <div class="checklist-cols">
     <div>
@@ -90,6 +108,7 @@
       <li><strong>One trophy can be missed:</strong> Positive Mental Attitude — the Lucia balcony meditation spot in Chapter 1 disappears when Chapter 1 ends. Do it in Chapter 1.</li>
     </ul>
   </div>
+  <p class="scroll-hint">&#8595; Scroll &mdash; Stage 1, Stage 2 and Stage 3 below</p>
   <ol class="stages">
     <li><h3>Stage 1 — Story first <span class="stage-count" data-stage="1"></span></h3>
       <p>Play the story in order: Gone Fishing, then Chapters 1 to 4 and the final mission, plus the stranger strands you meet along the way — Andy, Kenton, Billy, Randy and Tyrone, each ending in its own trophy. Do the Chapter 1 balcony meditation as soon as you can. Tick each story trophy as it pops.</p></li>
@@ -106,6 +125,12 @@
   <div id="missableList" class="list" role="list"></div>
   <h3>Story trophies are not missable — but they are one-shot</h3>
   <p>Chapter and mission trophies unlock in story order and cannot be missed by playing through. They also cannot be replayed, so if you ever worry you skipped something, reload the manual save from the start of that chapter.</p>
+</section>
+
+<section id="tab-nextup" class="panel hidden">
+  <h2>Next up</h2>
+  <p>Your next stop on the road to the platinum, plus the next few trophies in roadmap order. Pick one and the checklist marks it for you.</p>
+  <div id="nextUpTab"></div>
 </section>
 
 <section id="tab-sources" class="panel hidden">
@@ -133,7 +158,8 @@
 </main>
 
 <footer>
-  <p>Guide text is written for this entry in its own words; each trophy cites its sources by name. Trophy names, descriptions and grades are as PlayStation publishes them. No Rockstar artwork or logo is used. Works fully offline — progress lives in your browser only.</p>
+  <p>Leonida Trophy Guide &middot; unofficial fan guide &middot; progress stays in your browser &middot; 55 trophies</p>
+  <p>Guide text is written for this entry in its own words; each trophy cites its sources by name. Trophy names, descriptions and grades are as PlayStation publishes them. No Rockstar artwork or logo is used. Works fully offline &mdash; progress lives in your browser only.</p>
 </footer>
 <script type="module" src="app.js"></script>
 </body>
