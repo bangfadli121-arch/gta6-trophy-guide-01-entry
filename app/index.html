@@ -14,7 +14,7 @@
   <div class="progress-wrap" aria-label="Platinum progress">
     <div class="progress-line"><span id="progressText">0 of 55 earned</span><span id="progressPct">0%</span></div>
     <div class="progress-bar"><div id="progressFill"></div></div>
-    <p class="grade-line" id="gradeLine"></p>
+    <p class="grade-chips" id="gradeChips"></p>
   </div>
 </header>
 
@@ -22,23 +22,26 @@
   <button type="button" class="tab active" data-tab="checklist">Checklist</button>
   <button type="button" class="tab" data-tab="roadmap">Roadmap to Platinum</button>
   <button type="button" class="tab" data-tab="missables">Missables</button>
+  <button type="button" class="tab" data-tab="sources">Sources &amp; honesty</button>
 </nav>
 
 <main>
 <section id="tab-checklist" class="panel">
+  <div id="nextUpBox" class="nextup" aria-live="polite"></div>
+
+  <div class="missable-banner" role="alert">
+    <strong>1 missable + 1 time-sensitive:</strong> Positive Mental Attitude — Lucia&rsquo;s balcony
+    meditation in Chapter 1 disappears after Chapter 1 ends. Do it before Chapter 1 ends, or the
+    platinum needs a second playthrough.
+  </div>
+
+  <p class="audit-strip" id="auditStrip"></p>
+
+  <div class="stage-chips" id="stageChips" aria-label="Roadmap stages"></div>
+
   <div class="controls">
     <label class="search">Search trophies
       <input id="search" type="search" placeholder="Try “bank”, “drone”, “meditate”…">
-    </label>
-    <label>Category
-      <select id="category">
-        <option value="all">All categories</option>
-        <option value="story">Story</option>
-        <option value="missable">Missable</option>
-        <option value="collectibles">Collectibles</option>
-        <option value="activities">Activities</option>
-        <option value="completion">Completion</option>
-      </select>
     </label>
     <label>Grade
       <select id="grade">
@@ -55,9 +58,18 @@
     <label class="importBtn">Import progress <input id="importFile" type="file" accept="application/json"></label>
     <button id="resetBtn" type="button">Reset</button>
   </div>
-  <p class="hint">Tick a trophy when you earn it — progress is saved in this browser. Click a card to open its guide and sources.</p>
+
+  <div class="pills" id="pills" role="group" aria-label="Filter trophies"></div>
+
   <p id="countLine" class="count-line"></p>
-  <div id="list" class="list"></div>
+
+  <div class="checklist-cols">
+    <div>
+      <p class="hint">Tick a trophy when you earn it — progress is saved in this browser. Click a row to open its field notes on the right.</p>
+      <div id="list" class="list" role="list"></div>
+    </div>
+    <aside id="detail" class="detail" aria-label="Trophy details" aria-live="polite"></aside>
+  </div>
 </section>
 
 <section id="tab-roadmap" class="panel hidden">
@@ -79,21 +91,44 @@
     </ul>
   </div>
   <ol class="stages">
-    <li><h3>Stage 1 — Story, Chapters 1–4</h3><p>Play the story in order: Gone Fishing, then Chapters 1 to 4 and the final mission. Do the Chapter 1 balcony meditation as soon as you can. Tick each story trophy as it pops.</p></li>
-    <li><h3>Stage 2 — Stranger mission strands</h3><p>Clear all 8 stranger strands — Andy, Kenton, Billy, Randy, Tyrone and the rest — to their final missions. Each strand ends in its own trophy, and all 8 together earn Strangers &amp; Freaks.</p></li>
-    <li><h3>Stage 3 — Collectibles</h3><p>Finish the 3 card sets, WAiNK at 100 locations, discover 100 vehicles, explore all 52 areas, buy all 8 garages and register 10 vehicles on the Scooter Bros app.</p></li>
-    <li><h3>Stage 4 — Activities</h3><p>Gold all 42 Shooting Range challenges, win the 14 drone races and 20 different races, complete 250 stunts, meditate at the remaining spots, and try all 9 activity types.</p></li>
-    <li><h3>Stage 5 — Crime and money</h3><p>Rob the shops, jewelry store, armored trucks, 5 bank vaults and one illegal operation per gang; launder $250,000 of marked bills and spend $100,000 across shops.</p></li>
-    <li><h3>Stage 6 — 100% and platinum</h3><p>Check the in-game completion percentage, mop up whatever is left, and earn A Long Road for 100% completion — then Vice Got a Price! follows.</p></li>
+    <li><h3>Stage 1 — Story first <span class="stage-count" data-stage="1"></span></h3>
+      <p>Play the story in order: Gone Fishing, then Chapters 1 to 4 and the final mission, plus the stranger strands you meet along the way — Andy, Kenton, Billy, Randy and Tyrone, each ending in its own trophy. Do the Chapter 1 balcony meditation as soon as you can. Tick each story trophy as it pops.</p></li>
+    <li><h3>Stage 2 — Activities &amp; collectibles <span class="stage-count" data-stage="2"></span></h3>
+      <p>The counted grind: 250 stunts, gold on all 42 Shooting Range challenges, 14 drone races, 20 different races, the 3 card sets, WAiNK at 100 locations, 100 vehicles discovered, all 52 areas explored, 8 garages bought, 10 vehicles on the Scooter Bros app, and the rest of the numbered targets. Work through them with the checklist — every one shows its PSN target.</p></li>
+    <li><h3>Stage 3 — Side &amp; cleanup <span class="stage-count" data-stage="3"></span></h3>
+      <p>The one-off trophies — the jewelry store, the armored truck, the 5 bank vaults, one illegal operation per gang, the $250,000 of laundered marked bills, the $100,000 spent across shops, and the odd encounters like the Rhino and the showroom smash. Then check the in-game completion percentage, mop up what is left, and earn A Long Road for 100% completion — then Vice Got a Price! follows.</p></li>
   </ol>
 </section>
 
 <section id="tab-missables" class="panel hidden">
   <h2>Missable trophies</h2>
   <p>Only one trophy is missable from the official descriptions. Everything else can be earned in free roam after the story — but because there is no mission replay, keep a manual save at the start of each chapter anyway.</p>
-  <div id="missableList" class="list"></div>
+  <div id="missableList" class="list" role="list"></div>
   <h3>Story trophies are not missable — but they are one-shot</h3>
   <p>Chapter and mission trophies unlock in story order and cannot be missed by playing through. They also cannot be replayed, so if you ever worry you skipped something, reload the manual save from the start of that chapter.</p>
+</section>
+
+<section id="tab-sources" class="panel hidden">
+  <h2>Sources &amp; honesty</h2>
+  <p class="audit-strip" id="auditStrip2"></p>
+  <p><strong>The game had not released when this guide was written.</strong> The trophy list — all 55
+  names, descriptions and grades — comes from the consensus of the PSN trophy trackers and guide
+  sites below, checked against each other on 19 November 2026. Where the sites agreed, the list
+  is shown as published; where they differed on wording, the tracker wording was used.</p>
+  <ul>
+    <li><strong>Exophase</strong> — the GTA VI trophy list: name, description and grade for every trophy. Retrieved 19 November 2026.</li>
+    <li><strong>PowerPyx</strong> — GTA VI Trophy Guide &amp; Roadmap: guide steps and roadmap order. Retrieved 19 November 2026.</li>
+    <li><strong>PSNProfiles</strong> — GTA VI Trophy Guide: guide steps and rarity context. Retrieved 19 November 2026.</li>
+    <li><strong>TrueTrophies</strong> — GTA VI Trophy Guide: guide steps. Retrieved 19 November 2026.</li>
+    <li><strong>PlayStationTrophies.org</strong> — GTA VI Trophy Guide: guide steps. Retrieved 19 November 2026.</li>
+    <li><strong>GTABase</strong> — meditation spot locations for Positive Mental Attitude. Retrieved 19 November 2026.</li>
+  </ul>
+  <p>Every guide in this entry is written in our own words — no guide text is copied from any
+  source. The difficulty (1–5) and time estimates are our honest judgement from the guide text,
+  not official figures. Counts such as &ldquo;250 stunts&rdquo; or &ldquo;18 meditation spots&rdquo; come
+  straight from the official trophy descriptions. If the live game changes a description, the
+  tracker wording here is the one to re-check first.</p>
+  <p>No Rockstar artwork or logo is used. Works fully offline — progress lives in your browser only.</p>
 </section>
 </main>
 
