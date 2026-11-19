@@ -1,7 +1,7 @@
 [
   {
     "file": "1-cover.jpg",
-    "path": "/",
+    "path": "/?demo=cover",
     "viewport": {
       "height": 800,
       "width": 1280
